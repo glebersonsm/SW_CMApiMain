@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "1PoQWeF0vrA=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\glebe\\source\\repos\\glebersonsm\\SW_CMApi\\SW_CMApi.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\glebe\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.1\\microsoft.aspnetcore.openapi.10.0.1.nupkg.sha512",
+    "C:\\Users\\glebe\\.nuget\\packages\\microsoft.openapi\\2.0.0\\microsoft.openapi.2.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
