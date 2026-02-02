@@ -18,15 +18,38 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 // NHibernate Configuration
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var connectionString = builder.Configuration.GetConnectionString("CmConnection") 
+    ?? builder.Configuration.GetConnectionString("DefaultConnection");
+
+if (string.IsNullOrEmpty(connectionString))
+{
+    throw new InvalidOperationException("Connection string 'CmConnection' or 'DefaultConnection' not found.");
+}
+
+IPersistenceConfigurer databaseConfig;
+
+// Simple detection strategy based on common keywords
+if (connectionString.Contains("DESCRIPTION") || connectionString.Contains("CONNECT_DATA"))
+{
+    // Oracle
+    databaseConfig = OracleManagedDataClientConfiguration.Oracle10
+        .ConnectionString(connectionString)
+        .ShowSql()
+        .FormatSql()
+        .AdoNetBatchSize(50)
+        .Raw("throw_on_error", "true");
+}
+else
+{
+    // Fallback/Default to MSSQL
+    databaseConfig = MsSqlConfiguration.MsSql2012
+        .ConnectionString(connectionString)
+        .ShowSql();
+}
 
 var sessionFactory = Fluently.Configure()
-    .Database(MsSqlConfiguration.MsSql2012
-        .ConnectionString(connectionString)
-        .ShowSql() // Útil para debug
-    )
+    .Database(databaseConfig)
     .Mappings(m => m.FluentMappings.AddFromAssemblyOf<ReservaMap>())
-    // .ExposeConfiguration(cfg => new SchemaExport(cfg).Create(false, false)) // Cuidado em produção!
     .BuildSessionFactory();
 
 // Registrar ISessionFactory como Singleton (Thread-safe e custoso para criar)
