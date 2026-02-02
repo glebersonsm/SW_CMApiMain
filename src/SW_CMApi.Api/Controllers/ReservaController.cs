@@ -3,7 +3,7 @@ using SW_CMApi.Application.DTOs;
 using SW_CMApi.Application.Services.Reservas.Interfaces;
 using System.Threading.Tasks;
 
-namespace SW_CMApi.Api.Controllers;
+namespace SW_CM_Reservas.Api.Controllers;
 
 [ApiController]
 [Route("Reserva/v1")]
@@ -25,7 +25,7 @@ public class ReservaController : ControllerBase
             var respostaApi = new ApiResponseDto<ReservaResponseDataDto>(201, true, dadosDaReserva, "Reserva criada com sucesso.");
             return Created("", respostaApi);
         }
-        catch (System.Exception ex)
+        catch (Exception ex)
         {
             return BadRequest(new ApiResponseDto<object>(400, false, null, ex.Message));
         }
@@ -40,7 +40,7 @@ public class ReservaController : ControllerBase
             var respostaApi = new ApiResponseDto<object>(200, true, null, mensagem);
             return Ok(respostaApi);
         }
-        catch (System.Exception ex)
+        catch (Exception ex)
         {
              return BadRequest(new ApiResponseDto<object>(400, false, null, ex.Message));
         }
