@@ -16,7 +16,7 @@ public class ReservaController : ControllerBase
         _reservaService = reservaService;
     }
 
-    [HttpPost("efetuarReservasAgendamento")]
+    [HttpPost("efetuarReserva")]
     public async Task<IActionResult> CriarReserva([FromBody] ReservaRequestDto reservaDto)
     {
         try
@@ -31,7 +31,7 @@ public class ReservaController : ControllerBase
         }
     }
 
-    [HttpPost("cancelarReservasAgendamento")]
+    [HttpPost("cancelarReserva")]
     public async Task<IActionResult> CancelarReserva([FromBody] ReservaCancelarRequestDto reservaCancelar)
     {
         try
