@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using NHibernate;
-using SW_CMApi.Application.Interfaces.Base;
+using SW_CMApi.Domain.Repositories.Base;
 
 namespace SW_CMApi.Infrastructure.Data.Repositories.Base;
 

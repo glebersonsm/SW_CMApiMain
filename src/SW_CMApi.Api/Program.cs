@@ -3,7 +3,7 @@ using FluentNHibernate.Cfg.Db;
 using NHibernate;
 using NHibernate.Tool.hbm2ddl;
 using SW_CMApi.Application.Interfaces;
-using SW_CMApi.Application.Interfaces.Base;
+using SW_CMApi.Domain.Repositories.Base;
 using SW_CMApi.Application.Services;
 using SW_CMApi.Domain.Repositories;
 using SW_CMApi.Infrastructure.Data.Mappings;
@@ -41,6 +41,11 @@ builder.Services.AddScoped<ISession>(factory =>
 // Registrar Repositories e Services
 builder.Services.AddScoped<IRepositoryNH, RepositoryNH>();
 builder.Services.AddScoped<IReservaRepository, ReservaRepository>();
+builder.Services.AddScoped<IParametroHotelRepository, ParametroHotelRepository>();
+builder.Services.AddScoped<IHospedeRepository, HospedeRepository>();
+builder.Services.AddScoped<IMovimentoHospedeRepository, MovimentoHospedeRepository>();
+builder.Services.AddScoped<IReservaReduzidaRepository, ReservaReduzidaRepository>();
+
 builder.Services.AddScoped<IReservaService, ReservaService>();
 
 var app = builder.Build();

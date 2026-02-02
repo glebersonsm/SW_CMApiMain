@@ -1,3 +1,4 @@
+using SW_CMApi.Domain.Repositories.Base;
 using SW_CMApi.Domain.Entities;
 using System.Threading.Tasks;
 

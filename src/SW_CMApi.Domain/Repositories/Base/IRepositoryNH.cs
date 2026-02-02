@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using NHibernate;
 
-namespace SW_CMApi.Application.Interfaces.Base;
+namespace SW_CMApi.Domain.Repositories.Base;
 
 public interface IRepositoryNH
 {
