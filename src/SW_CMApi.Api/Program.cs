@@ -2,20 +2,37 @@ using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using NHibernate;
 using NHibernate.Tool.hbm2ddl;
-using SW_CMApi.Application.Interfaces;
+using SW_CMApi.Application.Services.Reservas.Interfaces;
 using SW_CMApi.Domain.Repositories.Base;
-using SW_CMApi.Application.Services;
+using SW_CMApi.Application.Services.Reservas;
 using SW_CMApi.Domain.Repositories;
 using SW_CMApi.Infrastructure.Data.Mappings;
 using SW_CMApi.Infrastructure.Data.Repositories;
 using SW_CMApi.Infrastructure.Data.Repositories.Base;
 using ISession = NHibernate.ISession;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
-builder.Services.AddOpenApi();
+builder.Services.AddEndpointsApiExplorer();
+
+// Swagger Configuration
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Backend - API.NET Reservas CM (Beach Park)",
+        Version = "v1",
+        Contact = new OpenApiContact
+        {
+            Name = "SW Soluções Integradas Ltda",
+            Email = "contato@swsolucoes.inf.br",
+            Url = new Uri("https://www.swsolucoes.inf.br")
+        }
+    });
+});
 
 // NHibernate Configuration
 var connectionString = builder.Configuration.GetConnectionString("CmConnection") 
@@ -76,7 +93,12 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Backend - API.NET Reservas CM (Beach Park) v1");
+        c.DisplayRequestDuration();
+    });
 }
 
 app.UseHttpsRedirection();

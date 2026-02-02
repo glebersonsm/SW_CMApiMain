@@ -1,7 +1,7 @@
 using SW_CMApi.Application.DTOs;
 using System.Threading.Tasks;
 
-namespace SW_CMApi.Application.Interfaces;
+namespace SW_CMApi.Application.Services.Reservas.Interfaces;
 
 public interface IReservaService
 {

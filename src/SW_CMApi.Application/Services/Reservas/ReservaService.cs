@@ -1,5 +1,5 @@
 using SW_CMApi.Application.DTOs;
-using SW_CMApi.Application.Interfaces;
+using SW_CMApi.Application.Services.Reservas.Interfaces;
 using SW_CMApi.Domain.Entities;
 using SW_CMApi.Domain.Enums;
 using SW_CMApi.Domain.Repositories;
@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SW_CMApi.Application.Services;
+namespace SW_CMApi.Application.Services.Reservas;
 
 public class ReservaService : IReservaService
 {

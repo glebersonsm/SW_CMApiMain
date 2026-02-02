@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using SW_CMApi.Application.DTOs;
-using SW_CMApi.Application.Interfaces;
+using SW_CMApi.Application.Services.Reservas.Interfaces;
 using System.Threading.Tasks;
 
 namespace SW_CMApi.Api.Controllers;
