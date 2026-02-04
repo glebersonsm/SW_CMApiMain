@@ -35,7 +35,7 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 // NHibernate Configuration
-var connectionString = builder.Configuration.GetConnectionString("CmConnection") 
+var connectionString = builder.Configuration.GetConnectionString("CmConnection")
     ?? builder.Configuration.GetConnectionString("DefaultConnection");
 
 if (string.IsNullOrEmpty(connectionString))
