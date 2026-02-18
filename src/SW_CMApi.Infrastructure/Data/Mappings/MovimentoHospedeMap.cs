@@ -8,7 +8,8 @@ public class MovimentoHospedeMap : ClassMap<MovimentoHospede>
     public MovimentoHospedeMap()
     {
         Table("movimentohospedes");
-        
+        Schema("cm");
+
         // Composite ID mapping
         CompositeId()
             .KeyProperty(x => x.IdResevasFront, "idreservasfront")

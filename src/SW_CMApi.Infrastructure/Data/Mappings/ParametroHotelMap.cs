@@ -8,6 +8,8 @@ public class ParametroHotelMap : ClassMap<ParametroHotel>
     public ParametroHotelMap()
     {
         Table("paramhotel");
+        Schema("cm");
+
         Id(x => x.IdHotel, "idhotel").GeneratedBy.Assigned(); // PK is assigned (IdHotel itself)
 
         Map(x => x.HoraCheckIn, "horacheckin");

@@ -8,7 +8,8 @@ public class ReservaReduzidaMap : ClassMap<ReservaReduzida>
     public ReservaReduzidaMap()
     {
         Table("RESERVAREDUZ");
-        
+        Schema("cm");
+
         Id(x => x.IdReserva, "idreservasfront").GeneratedBy.Assigned(); 
         // Logic: ReservaReduzida shares ID with Reserva (OneToOne logic often) or just manual insert
 

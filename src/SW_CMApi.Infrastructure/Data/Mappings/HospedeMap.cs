@@ -8,6 +8,8 @@ public class HospedeMap : ClassMap<Hospede>
     public HospedeMap()
     {
         Table("hospede");
+        Schema("cm");
+
         Id(x => x.IdHospede, "idhospede").GeneratedBy.Native();
 
         Map(x => x.IdCidade, "idcidades");

@@ -9,7 +9,8 @@ public class ReservaMap : ClassMap<Reserva>
     public ReservaMap()
     {
         Table("reservasfront");
-        
+        Schema("cm");
+
         Id(x => x.IdReserva, "idreservasfront").GeneratedBy.Native();
 
         Map(x => x.NumeroReserva, "numreserva").Not.Nullable();
