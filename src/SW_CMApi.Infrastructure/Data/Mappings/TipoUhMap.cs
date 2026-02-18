@@ -15,5 +15,6 @@ public class TipoUhMap : ClassMap<TipoUh>
             .KeyProperty(x => x.IdTipoUh, "idtipouh");
 
         Map(x => x.CodigoReduzido, "codreduzido");
+        Map(x => x.Descricao);
     }
 }

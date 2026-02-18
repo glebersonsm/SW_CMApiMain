@@ -3,7 +3,7 @@ using SW_CMApi.Application.DTOs;
 using SW_CMApi.Application.Services.Reservas.Interfaces;
 using System.Threading.Tasks;
 
-namespace SW_CM_Reservas.Api.Controllers;
+namespace SW_CM_Reservas.Api.Controllers.Reservas;
 
 [ApiController]
 [Route("Reserva/v1")]

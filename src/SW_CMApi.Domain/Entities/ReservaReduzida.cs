@@ -4,14 +4,14 @@ namespace SW_CMApi.Domain.Entities;
 
 public class ReservaReduzida
 {
-    public long IdReserva { get; set; }
-    public long IdHotel { get; set; }
-    public DateTime? DataCheckinPrevisto { get; set; }
-    public DateTime? DataCheckoutPrevisto { get; set; }
-    public long? StatusReserva { get; set; }
-    public long? IdFornecedorCliente { get; set; }
-    public long? CodigoContrato { get; set; }
-    public long? TipoUh { get; set; }
-    public DateTime? TrgDataInclusao { get; set; }
-    public string? UsuarioInclusao { get; set; }
+    public virtual long IdReserva { get; set; }
+    public virtual long IdHotel { get; set; }
+    public virtual DateTime? DataCheckinPrevisto { get; set; }
+    public virtual DateTime? DataCheckoutPrevisto { get; set; }
+    public virtual long? StatusReserva { get; set; }
+    public virtual long? IdFornecedorCliente { get; set; }
+    public virtual long? CodigoContrato { get; set; }
+    public virtual long? TipoUh { get; set; }
+    public virtual DateTime? TrgDataInclusao { get; set; }
+    public virtual string? UsuarioInclusao { get; set; }
 }

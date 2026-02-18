@@ -1,16 +1,15 @@
-using SW_CMApi.Domain.Repositories.Base;
+using SW_CMApi.Application.Interfaces;
 using SW_CMApi.Domain.Entities;
 using SW_CMApi.Domain.Repositories;
+using SW_CMApi.Infrastructure.Data.Repositories.Core;
 using System.Threading.Tasks;
-using NHibernate;
 using NHibernate.Linq;
-using SW_CMApi.Infrastructure.Data.Repositories.Base;
 
 namespace SW_CMApi.Infrastructure.Data.Repositories;
 
 public class ReservaRepository : RepositoryNH, IReservaRepository
 {
-    public ReservaRepository(ISession session) : base(session)
+    public ReservaRepository(IUnitOfWorkNHCm unitOfWork) : base(unitOfWork)
     {
     }
 

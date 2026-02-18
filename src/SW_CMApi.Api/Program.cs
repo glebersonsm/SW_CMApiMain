@@ -1,18 +1,52 @@
-using FluentNHibernate.Cfg;
-using FluentNHibernate.Cfg.Db;
-using NHibernate;
-using NHibernate.Tool.hbm2ddl;
-using SW_CMApi.Application.Services.Reservas.Interfaces;
-using SW_CMApi.Domain.Repositories.Base;
-using SW_CMApi.Application.Services.Reservas;
-using SW_CMApi.Domain.Repositories;
-using SW_CMApi.Infrastructure.Data.Mappings;
-using SW_CMApi.Infrastructure.Data.Repositories;
-using SW_CMApi.Infrastructure.Data.Repositories.Base;
-using ISession = NHibernate.ISession;
+using DotNetEnv;
 using Microsoft.OpenApi.Models;
+using SW_CMApi.Application.Services.Reservas;
+using SW_CMApi.Application.Services.Reservas.Interfaces;
+using SW_CMApi.Domain.Repositories;
+using SW_CMApi.Domain.Repositories.Base;
+using SW_CMApi.Infrastructure.Data.Repositories;
+using SW_CMApi.Infrastructure.Data.Repositories.Core;
+using SW_CMApi.Infrastructure.Extensions;
+
+// Carrega as variáveis de ambiente do arquivo .env (mesmo padrão do Backend - Reservas CM .NET Beach Park)
+var envPath = Path.Combine(AppContext.BaseDirectory, ".env");
+if (!File.Exists(envPath))
+{
+    envPath = Path.Combine(Directory.GetCurrentDirectory(), ".env");
+}
+if (!File.Exists(envPath))
+{
+    // Tenta na raiz da solução (parent do projeto)
+    var solutionRoot = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.FullName;
+    if (!string.IsNullOrEmpty(solutionRoot))
+    {
+        envPath = Path.Combine(solutionRoot, ".env");
+    }
+}
+
+if (File.Exists(envPath))
+{
+    Console.WriteLine($"Arquivo .env carregado de: {envPath}");
+    Env.Load(envPath);
+}
+else
+{
+    Console.WriteLine($"AVISO: Arquivo .env não encontrado. Usando appsettings.json.");
+    Console.WriteLine($"  - Tentado em: {Path.Combine(AppContext.BaseDirectory, ".env")}");
+    Console.WriteLine($"  - Tentado em: {Path.Combine(Directory.GetCurrentDirectory(), ".env")}");
+}
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Sobrescreve ConnectionStrings:CmConnection com CM_CONNECTION do .env (se definido)
+var cmConnection = Environment.GetEnvironmentVariable("CM_CONNECTION");
+if (!string.IsNullOrWhiteSpace(cmConnection))
+{
+    builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
+    {
+        ["ConnectionStrings:CmConnection"] = cmConnection
+    });
+}
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -34,49 +68,8 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// NHibernate Configuration
-var connectionString = builder.Configuration.GetConnectionString("CmConnection")
-    ?? builder.Configuration.GetConnectionString("DefaultConnection");
-
-if (string.IsNullOrEmpty(connectionString))
-{
-    throw new InvalidOperationException("Connection string 'CmConnection' or 'DefaultConnection' not found.");
-}
-
-IPersistenceConfigurer databaseConfig;
-
-// Simple detection strategy based on common keywords
-if (connectionString.Contains("DESCRIPTION") || connectionString.Contains("CONNECT_DATA"))
-{
-    // Oracle
-    databaseConfig = OracleManagedDataClientConfiguration.Oracle10
-        .ConnectionString(connectionString)
-        .ShowSql()
-        .FormatSql()
-        .AdoNetBatchSize(50)
-        .Raw("throw_on_error", "true");
-}
-else
-{
-    // Fallback/Default to MSSQL
-    databaseConfig = MsSqlConfiguration.MsSql2012
-        .ConnectionString(connectionString)
-        .ShowSql();
-}
-
-var sessionFactory = Fluently.Configure()
-    .Database(databaseConfig)
-    .Mappings(m => m.FluentMappings.AddFromAssemblyOf<ReservaMap>())
-    .BuildSessionFactory();
-
-// Registrar ISessionFactory como Singleton (Thread-safe e custoso para criar)
-builder.Services.AddSingleton(sessionFactory);
-
-// Registrar ISession como Scoped (Uma por requisição)
-builder.Services.AddScoped<ISession>(factory =>
-{
-    return factory.GetService<ISessionFactory>().OpenSession();
-});
+// NHibernate Configuration - Padrão alinhado ao Backend Reservas CM .NET (Beach Park)
+builder.Services.AddNHibernateCm(builder.Configuration);
 
 // Registrar Repositories e Services
 builder.Services.AddScoped<IRepositoryNH, RepositoryNH>();

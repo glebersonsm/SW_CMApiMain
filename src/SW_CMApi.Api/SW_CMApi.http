@@ -1,6 +1,0 @@
-@SW_CMApi_HostAddress = http://localhost:5088
-
-GET {{SW_CMApi_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

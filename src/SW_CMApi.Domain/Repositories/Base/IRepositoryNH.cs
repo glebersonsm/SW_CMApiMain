@@ -22,6 +22,7 @@ public interface IRepositoryNH
     
     Task<T> FindById<T>(object id); // Id pode ser int ou long
     Task<T> Save<T>(T entity);
+    Task<IList<T>> SaveRange<T>(IList<T> entities);
     Task Remove<T>(T entity);
-    // Task<IList<T>> FindByHql<T>(string hql, params object[] parameters); // Simplificando params
+    Task RemoveRange<T>(IList<T> entities);
 }
