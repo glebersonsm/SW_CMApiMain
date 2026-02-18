@@ -84,7 +84,7 @@ public class Reserva
     public virtual string TipoDeUso { get; set; } = "UP";
 
     // Métodos de Dominio
-    public void Cancelar(long idMotivo, string observacaoCancelamento) {
+    public virtual void Cancelar(long idMotivo, string observacaoCancelamento) {
         this.LocalizadorReserva = null;
         this.StatusReserva = (long)Enums.StatusReserva.CANCELADA;
         this.DataCancelamento = DateTime.Now;
@@ -92,12 +92,12 @@ public class Reserva
         this.ObservacaoCancelamento = observacaoCancelamento;
     }
 
-    public void Confirmar() {
+    public virtual void Confirmar() {
         this.DataConfirmacao = null;
         this.StatusReserva = (long)Enums.StatusReserva.CONFIRMADA;
     }
 
-    public void AtualizarQuantidadeHospedes(long qtdeAdulto, long qtdeCrianca1, long qtdeCrianca2) {
+    public virtual void AtualizarQuantidadeHospedes(long qtdeAdulto, long qtdeCrianca1, long qtdeCrianca2) {
         this.QuantidadeAdulto = qtdeAdulto;
         this.QuantidadeCrianca1 = qtdeCrianca1;
         this.QuantidadeCrianca2 = qtdeCrianca2;
